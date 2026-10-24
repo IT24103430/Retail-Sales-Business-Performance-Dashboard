@@ -1,20 +1,46 @@
 # Python environments and caches
 .venv/
+.venv-*/
 venv/
+env/
+ENV/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
 
-# Local settings and operating system files
+# Local environment files; keep the example configuration tracked
 .env
 .env.*
 !.env.example
-.DS_Store
-Thumbs.db
-~$*
 
-# Power BI local caches and user settings
+# Power BI machine-specific settings and model cache
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
-**/.pbi/unappliedChanges.json
-*.pbix.tmp
+
+# Temporary project files and editor backups
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+~$*
+
+# Operating system files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Keep CSV data, scripts, docs, M/DAX, themes and PBIP source definitions tracked.
+# Do not ignore the whole .pbi folder: unappliedChanges.json may contain edits.
+# PBIP/PBIR/PBISM/TMDL, .platform, definition/ and StaticResources/ remain tracked.
