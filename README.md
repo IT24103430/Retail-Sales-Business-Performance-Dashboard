@@ -8,6 +8,16 @@ This project is designed to demonstrate practical skills in **data preparation, 
 
 The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
 
+## Power BI Project Status
+
+The repository currently contains the CSV, Power Query, DAX, theme, and page
+specifications. **No Desktop-generated PBIP/PBIR/TMDL scaffold or PBIX exists.**
+The source assets were reviewed and preserved. Follow
+[the Desktop build steps](docs/powerbi_desktop_build_steps.md) to create
+`powerbi/RetailSalesAnalytics.pbip` with enhanced PBIR report definitions and a
+TMDL semantic model. Data refresh, rendered pages, interactions, and project
+reopening still require Windows Power BI Desktop; they have not been verified.
+
 ## Project Overview
 
 Retail businesses generate sales data every day, but raw spreadsheets make it difficult to identify trends, profitable products, and regional performance. This project uses **Microsoft Power BI** to turn retail sales records into actionable insights.
@@ -220,6 +230,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── page_03_regional_channel.md
     ├── report_interactions.md
     ├── power_query_setup.md
+    ├── powerbi_desktop_build_steps.md
     └── screenshots/
 ```
 
@@ -249,7 +260,7 @@ Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
 [data dictionary](docs/data_dictionary.md) for column definitions and the
 [data profile](docs/data_profile.md) for quality checks and revenue estimates.
 
-Building, refreshing, and validating the report in Power BI Desktop are pending. Desktop requires a Windows environment; no report has been opened or verified for this Power Query step.
+Build the actual project by following [the Desktop build steps](docs/powerbi_desktop_build_steps.md). PBIP/PBIR/TMDL generation, refresh, report rendering, and reopening are pending in Windows Desktop. No report has been opened or verified in this workspace.
 
 ## Validation Checklist
 
