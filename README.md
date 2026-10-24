@@ -4,7 +4,7 @@ A **Business Intelligence portfolio project** focused on transforming retail tra
 
 This project is designed to demonstrate practical skills in **data preparation, data modeling, DAX, data visualization, and business analysis** for a Business Intelligence internship.
 
-> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, and Power Query scripts created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
+> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, and core DAX measures created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
 
 The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
 
@@ -94,57 +94,26 @@ Link each dimension to `FactSales` with an appropriate **one-to-many relationshi
 
 | KPI | Definition |
 | --- | --- |
+| Gross Revenue | Sum of `GrossSales` before discounts |
 | Total Revenue | Sum of `(Quantity × UnitPrice) − DiscountAmount` |
 | Total Cost | Sum of `Quantity × UnitCost` |
 | Total Profit | Total Revenue − Total Cost |
-| Profit Margin | Total Profit ÷ Total Revenue |
+| Profit Margin % | Total Profit ÷ Total Revenue |
 | Total Orders | Distinct count of order IDs |
+| Units Sold | Sum of `Quantity` |
 | Average Order Value | Total Revenue ÷ Total Orders |
+| Total Discount | Sum of `DiscountAmount` |
 | Monthly Revenue Growth | Percentage change from the previous month |
 
-### Example DAX Measures
+### DAX Measures
 
-The following examples assume the fact table is named `FactSales` and the calendar table is `DimDate`.
+The canonical nine core measures are in [core_measures.dax](powerbi/measures/core_measures.dax).
+Follow [the DAX guide](docs/dax_guide.md) to add them one at a time and apply LKR,
+percentage, and whole-number formats. They use the prepared FactSales columns and
+count distinct orders across multi-item baskets. Desktop execution is pending.
 
-```dax
-Total Revenue =
-SUMX(
-    FactSales,
-    FactSales[Quantity] * FactSales[UnitPrice] - FactSales[DiscountAmount]
-)
-
-Total Cost =
-SUMX(
-    FactSales,
-    FactSales[Quantity] * FactSales[UnitCost]
-)
-
-Total Profit =
-[Total Revenue] - [Total Cost]
-
-Profit Margin % =
-DIVIDE([Total Profit], [Total Revenue], 0)
-
-Total Orders =
-DISTINCTCOUNT(FactSales[OrderID])
-
-Average Order Value =
-DIVIDE([Total Revenue], [Total Orders], 0)
-
-Previous Month Revenue =
-CALCULATE(
-    [Total Revenue],
-    DATEADD(DimDate[Date], -1, MONTH)
-)
-
-Monthly Revenue Growth % =
-DIVIDE(
-    [Total Revenue] - [Previous Month Revenue],
-    [Previous Month Revenue]
-)
-```
-
-**Important:** Format percentage measures as percentages in Power BI. For meaningful month-over-month comparisons, use a proper date table and display the measures in a monthly date context.
+Monthly Revenue Growth % remains planned for a later time-intelligence step.
+Use [the data model guide](docs/data_model.md) to create and configure DimDate first.
 
 ## Dashboard Pages
 
@@ -205,11 +174,14 @@ Retail-Sales-Business-Performance-Dashboard/
 ├── powerbi/
 │   ├── queries/
 │   ├── measures/
+│   │   └── core_measures.dax
 │   └── theme/
 └── docs/
     ├── project_plan.md
     ├── data_dictionary.md
     ├── data_profile.md
+    ├── data_model.md
+    ├── dax_guide.md
     ├── power_query_setup.md
     └── screenshots/
 ```
@@ -234,7 +206,7 @@ Generate the five raw CSV files (this script uses only the Python standard libra
 python3 scripts/generate_data.py
 ```
 
-The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; DAX files and a theme will be added in later steps. See [the project plan](docs/project_plan.md) for their intended locations.
+The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; Core DAX definitions are in `powerbi/measures/core_measures.dax`; a theme remains for a later step. See [the project plan](docs/project_plan.md) for their intended locations.
 
 Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
 [data dictionary](docs/data_dictionary.md) for column definitions and the

@@ -1,0 +1,46 @@
+// Retail Sales Analytics: create each measure separately in Power BI Desktop.
+// Copy one definition at a time, starting with its measure name and equals sign.
+// Requires the FactSales columns produced by powerbi/queries/fact_sales.m.
+// All measures respect the current date, product, customer, region, and channel filters.
+// Set display formats in the model using docs/dax_guide.md; keep results numeric.
+
+// LKR sales before discounts: GrossSales already equals Quantity * UnitPrice.
+Gross Revenue =
+    SUM ( FactSales[GrossSales] )
+
+// LKR sales after discounts: NetSales already subtracts the total line discount once.
+Total Revenue =
+    SUM ( FactSales[NetSales] )
+
+// LKR product cost: TotalCost already equals Quantity * UnitCost.
+// The measure name "Total Cost" has a space; the column name "TotalCost" does not.
+Total Cost =
+    SUM ( FactSales[TotalCost] )
+
+// LKR profit: LineProfit already equals NetSales - TotalCost.
+// This is also equal to [Total Revenue] - [Total Cost] for the same sales rows.
+Total Profit =
+    SUM ( FactSales[LineProfit] )
+
+// Divide total profit by total net revenue, rather than averaging line margins.
+// DIVIDE returns BLANK when revenue is zero or blank; display this as a percentage.
+Profit Margin % =
+    DIVIDE ( [Total Profit], [Total Revenue] )
+
+// Count each order once in the current filters, even when it has several lines.
+// Power Query removes blank OrderID values before this measure is evaluated.
+Total Orders =
+    DISTINCTCOUNT ( FactSales[OrderID] )
+
+// Count sale units across lines; packaged products count as one sale unit each.
+Units Sold =
+    SUM ( FactSales[Quantity] )
+
+// LKR revenue per distinct order; do not divide by sales-line count.
+// DIVIDE returns BLANK when there are no orders in the current filters.
+Average Order Value =
+    DIVIDE ( [Total Revenue], [Total Orders] )
+
+// DiscountAmount is a complete line discount, so do not multiply it by Quantity.
+Total Discount =
+    SUM ( FactSales[DiscountAmount] )

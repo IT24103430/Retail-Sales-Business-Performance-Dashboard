@@ -34,7 +34,7 @@ Use date, region, and category filters where relevant. Planned KPIs are Total Re
 - Use lowercase `snake_case` for scripts, CSV files, documentation, query files, measure files, themes, and screenshots.
 - Raw data paths: `data/raw/fact_sales.csv`, `data/raw/dim_products.csv`, `data/raw/dim_customers.csv`, `data/raw/dim_regions.csv`, and `data/raw/dim_channels.csv`. Reserve `data/processed/` for prepared outputs; keep one canonical file per table at each stage.
 - Use descriptive script names such as `scripts/generate_data.py`; avoid names such as `final_v2.py`.
-- Use one shared measure file, `powerbi/measures/sales_measures.dax`, and one theme, `powerbi/theme/retail_sales_theme.json`.
+- Keep core measure definitions in `powerbi/measures/core_measures.dax` and the single theme in `powerbi/theme/retail_sales_theme.json`.
 - Name the report `RetailSalesAnalytics.pbix` or `RetailSalesAnalytics.pbip` when it is actually created. Document the chosen format and keep one report source.
 - Name screenshots `executive_overview.png`, `product_performance.png`, and `regional_sales_analysis.png`.
 - Preserve fact columns: `SalesLineID`, `OrderID`, `OrderDate`, `ProductID`, `CustomerID`, `RegionID`, `ChannelID`, `Quantity`, `UnitPrice`, `UnitCost`, and `DiscountAmount`. Dimension labels live in the dimension files; see `data/README.md` for their columns. Revenue subtracts line discounts from gross sales.
@@ -42,4 +42,4 @@ Use date, region, and category filters where relevant. Planned KPIs are Total Re
 
 ## Current status
 
-Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. Executing the queries in Desktop, measures, theme, report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
+Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. The star schema and DimDate instructions are in `docs/data_model.md`. The nine core DAX measures are prepared in `powerbi/measures/core_measures.dax`, with formatting and usage in `docs/dax_guide.md`. Executing queries and measures in Desktop, the theme, report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
