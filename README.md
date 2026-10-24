@@ -1,203 +1,91 @@
 # Retail Sales Analytics
 
-A **Business Intelligence portfolio project** focused on transforming retail transaction data into clear, interactive dashboards that support data-driven decisions.
+**A Sri Lankan retail Business Intelligence portfolio project** using Python,
+CSV, Power Query, DAX, and Power BI. It combines reproducible synthetic data,
+calculated business insights, and a documented plan for a three-page sales report.
+All monetary values use **Sri Lankan rupees (LKR)**.
 
-This project is designed to demonstrate practical skills in **data preparation, data modeling, DAX, data visualization, and business analysis** for a Business Intelligence internship.
+**5,000 order lines · 2,453 orders · 30 products · 9 regions · 4 channels**
 
-> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, core DAX measures, time-intelligence measures, and the report theme created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
+> **Current status:** Python data generation, profiling, and insight generation
+> have run successfully. Power Query scripts, DAX measures, the report theme, and
+> dashboard specifications are prepared. **No Power BI dashboard has been opened,
+> refreshed, rendered, or verified in Desktop. No PBIP or PBIX report exists.**
 
-The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
+## Business problem
 
-## Power BI Project Status
+Retail transaction files contain useful detail, but managers need a clear view of
+sales trends, profitability, product performance, and regional/channel results.
+This project explores how a BI workflow can answer:
 
-The repository currently contains the CSV, Power Query, DAX, theme, and page
-specifications. **No Desktop-generated PBIP/PBIR/TMDL scaffold or PBIX exists.**
-The source assets were reviewed and preserved. Follow
-[the Desktop build steps](docs/powerbi_desktop_build_steps.md) to create
-`powerbi/RetailSalesAnalytics.pbip` with enhanced PBIR report definitions and a
-TMDL semantic model. Data refresh, rendered pages, interactions, and project
-reopening still require Windows Power BI Desktop; they have not been verified.
+- How much revenue and profit remain after discounts and product costs?
+- Which months, products, and categories contribute the most sales?
+- Which regions and channels perform strongly, and where should margins be reviewed?
+- How many distinct orders were placed, and what is their average value?
 
-## Project Overview
+The intended users are business owners, sales managers, and product managers.
+The scenario is fictional; it does not represent an actual retailer's results.
 
-Retail businesses generate sales data every day, but raw spreadsheets make it difficult to identify trends, profitable products, and regional performance. This project uses **Microsoft Power BI** to turn retail sales records into actionable insights.
+## Objectives
 
-The dashboard is intended to answer questions such as:
+1. Generate repeatable synthetic retail data and inspect its quality.
+2. Prepare reusable Power Query transformations and a clear star-schema design.
+3. Define consistent sales, profit, order, and time-intelligence measures.
+4. Specify a readable, interactive report and produce source-backed recommendations.
 
-- How much revenue and profit did the business generate?
-- Are sales increasing or decreasing over time?
-- Which products and categories perform best?
-- Which regions contribute the most revenue?
-- What is the average order value?
+## Completed work and Desktop work
 
-## Project Objectives
+| Deliverable | Evidence in this repository | Status |
+| --- | --- | --- |
+| Reproducible dataset | [Generator](scripts/generate_data.py) and [raw CSVs](data/raw/) | Generated successfully |
+| Data quality profile | [Profiler](scripts/profile_data.py) and [data profile](docs/data_profile.md) | Executed; current profile reports no missing values or key errors |
+| Business insights | [Insight generator](scripts/generate_insights.py) and [findings](docs/business_insights.md) | Calculated from CSVs |
+| Power Query, DAX, theme | [Queries](powerbi/queries/), [measures](powerbi/measures/), [theme](powerbi/theme/retail_theme.json) | Source assets prepared; Desktop testing pending |
+| Model and report design | [Model guide](docs/data_model.md), three page specifications, [design system](docs/design_system.md) | Documented; Desktop implementation pending |
+| Working report and screenshots | [Desktop build instructions](docs/powerbi_desktop_build_steps.md) | PBIP/PBIR/TMDL creation, refresh, rendering, and reopening pending |
 
-1. Prepare and clean a retail sales dataset using Power Query.
-2. Create a reliable data model using fact and dimension tables.
-3. Build business KPIs with DAX measures.
-4. Design interactive dashboards with filters and visualizations.
-5. Summarize key findings and business recommendations.
+These statuses distinguish executed Python analysis from supporting materials
+awaiting Power BI Desktop. The existing model diagram and wireframes describe the
+intended report; they are not screenshots of a finished dashboard.
 
-## Tools and Technologies
+## Tools
 
-| Tool | Purpose |
+| Tool | Role |
 | --- | --- |
-| **Power BI Desktop** | Build the data model, measures, and dashboards |
-| **Power Query** | Clean and transform data |
-| **DAX** | Calculate KPIs and time-based metrics |
-| **CSV** | Store raw and processed data |
-| **Python** | Generate and prepare reproducible synthetic sales data |
-| **Git & GitHub** | Version control and portfolio presentation |
+| Python | Seeded synthetic data generation, CSV profiling, and calculated insights |
+| CSV | Portable source fact and dimension tables |
+| Power Query M | Prepared data import, types, text cleaning, key checks, and line calculations |
+| DAX | Prepared core KPIs and date comparisons |
+| Power BI Desktop | Planned model/report assembly and verification in Windows |
+| Git and GitHub | Versioned scripts, data, design specifications, and documentation |
 
-## Dataset
+The three current Python scripts use only the standard library.
+[requirements.txt](requirements.txt) records pandas for future data preparation;
+it is not required to run those scripts.
 
-The dataset contains **5,000 synthetic order-line records** from **2025-01-01 through 2026-09-30** in a Sri Lankan retail context. No real customer information is used.
+## Synthetic dataset
 
-Raw files are `data/raw/fact_sales.csv`, `data/raw/dim_products.csv`, `data/raw/dim_customers.csv`, `data/raw/dim_regions.csv`, and `data/raw/dim_channels.csv`.
+Sales cover **2025-01-01 through 2026-09-30**. The generator uses the fixed seed
+**20250930**. No personal names, emails, phone numbers, or real customer records
+are included. Prices and costs are illustrative LKR values.
 
-| Fact column | Description |
-| --- | --- |
-| `SalesLineID` | Unique order-line identifier |
-| `OrderID` | Order identifier shared by its line items |
-| `OrderDate` | Transaction date in YYYY-MM-DD format |
-| `ProductID` | Key to the product dimension |
-| `CustomerID` | Key to the synthetic customer dimension |
-| `RegionID` | Key to the region dimension |
-| `ChannelID` | Key to the channel dimension |
-| `Quantity` | Number of units sold |
-| `UnitPrice` | Selling price per unit in LKR, before discount |
-| `UnitCost` | Cost per unit in LKR |
-| `DiscountAmount` | Total discount for the line in LKR |
+| Existing CSV | Rows | Grain |
+| --- | ---: | --- |
+| [fact_sales.csv](data/raw/fact_sales.csv) | 5,000 | One product line within an order |
+| [dim_products.csv](data/raw/dim_products.csv) | 30 | One product, with category and readable label |
+| [dim_customers.csv](data/raw/dim_customers.csv) | 700 | One anonymous synthetic customer, with segment and region |
+| [dim_regions.csv](data/raw/dim_regions.csv) | 9 | One Sri Lankan province/region, with a representative city |
+| [dim_channels.csv](data/raw/dim_channels.csv) | 4 | Physical Store, Online Store, Mobile App, or Telephone Order |
 
-Revenue is calculated after discounts; profit is revenue minus cost. See [the data README](data/README.md) for dimension columns and generation assumptions. Processed data will be added in a later step.
+An order can contain several product lines. Region describes the customer's
+assigned region; its city is a representative label, not independently measured
+city sales. The 2026 sales period is incomplete, so full-year comparisons need care.
 
-## Data Preparation
+The [data README](data/README.md) explains generation assumptions, and the
+[data dictionary](docs/data_dictionary.md) defines every source column. The
+[data/processed/](data/processed/) folder is reserved; no processed CSVs exist yet.
 
-The scripts in `powerbi/queries/` prepare the CSV tables in **Power Query**:
-
-- Correct column data types, especially dates and numeric values.
-- Check for missing order IDs, dates, product IDs, and prices.
-- Remove exact duplicate transaction rows when appropriate.
-- Validate that quantities and prices are sensible.
-- Check category and region labels in the dimension files.
-- Prepare the supplied fact and dimension tables for analysis.
-- Add GrossSales, NetSales, TotalCost, and LineProfit to FactSales.
-
-Follow [the Power Query setup guide](docs/power_query_setup.md) to create DataFolder and paste each query. Desktop execution is pending.
-
-## Data Model
-
-A **star schema** is recommended:
-
-- **FactSales:** Order line items, dates, foreign keys, quantities, unit prices, unit costs, and line discounts.
-- **DimDate:** Calendar dates, month, quarter, and year.
-- **DimProducts:** Product details and categories.
-- **DimCustomers:** Anonymous customer identifiers.
-- **DimRegions:** Region identifiers, names, and representative cities.
-- **DimChannels:** Sales channel identifiers and names.
-
-Link each dimension to `FactSales` with an appropriate **one-to-many relationship**. Use a dedicated, continuous date table for time intelligence.
-
-> Load the five supplied CSV files as the corresponding tables. Create DimDate in a later modeling step. RegionID is also present in the customer file; use the direct DimRegions-to-FactSales relationship and avoid an additional active region-to-customer filter path.
-
-## Key Performance Indicators (KPIs)
-
-| KPI | Definition |
-| --- | --- |
-| Gross Revenue | Sum of `GrossSales` before discounts |
-| Total Revenue | Sum of `(Quantity × UnitPrice) − DiscountAmount` |
-| Total Cost | Sum of `Quantity × UnitCost` |
-| Total Profit | Total Revenue − Total Cost |
-| Profit Margin % | Total Profit ÷ Total Revenue |
-| Total Orders | Distinct count of order IDs |
-| Units Sold | Sum of `Quantity` |
-| Average Order Value | Total Revenue ÷ Total Orders |
-| Total Discount | Sum of `DiscountAmount` |
-| Sales MoM % | Percentage revenue change from the previous month |
-| Sales YoY % | Percentage revenue change from the same prior-year period |
-| Sales YTD | Revenue from January 1 through the latest selected date |
-
-### DAX Measures
-
-The canonical nine core measures are in [core_measures.dax](powerbi/measures/core_measures.dax).
-Follow [the DAX guide](docs/dax_guide.md) to add them one at a time and apply LKR,
-percentage, and whole-number formats. They use the prepared FactSales columns and
-count distinct orders across multi-item baskets. Desktop execution is pending.
-
-The six time-intelligence measures are in [time_measures.dax](powerbi/measures/time_measures.dax),
-including Sales MoM %, Sales YoY %, and Sales YTD. Their comparison-period and blank
-assumptions are documented in [the DAX guide](docs/dax_guide.md#time-intelligence-measures).
-Use [the data model guide](docs/data_model.md) to create and configure DimDate first.
-
-## Dashboard Pages
-
-### 1. Executive Overview
-
-A high-level view of business performance:
-
-- KPI cards: Total Revenue, Total Profit, Profit Margin %, Total Orders, and Average Order Value
-- Monthly revenue trend line
-- Revenue by category
-- Revenue by sales channel
-- Regions ranked by revenue
-- Date, category, region, and channel slicers
-
-See [the Executive Overview specification](docs/page_01_executive_overview.md) for exact fields, filters, interactions, and its ASCII wireframe. Desktop implementation is pending.
-
-### 2. Product Performance
-
-Explore which products drive sales:
-
-- KPI cards: Units Sold, Total Revenue, and Profit Margin %
-- Top 10 products by revenue
-- Revenue vs profit by category
-- Low-margin products review table
-- Monthly revenue by category
-- Shared date, category, region, and channel slicers, plus a local product slicer
-
-See [the Product Performance specification](docs/page_02_product_performance.md) for field assignments, sorting, visual filters, conditional formatting, and business questions. It reuses existing measures; Desktop implementation is pending.
-
-### 3. Regional & Channel
-
-Compare geographic and channel performance:
-
-- KPI cards: regional revenue, distinct orders, and average order value
-- Revenue by Sri Lankan region with representative city labels
-- Revenue by sales channel
-- Monthly regional revenue in native small multiples
-- Detailed region-by-category revenue matrix
-- Date, category, region, and channel slicers
-
-See [the Regional & Channel specification](docs/page_03_regional_channel.md) for exact fields, sorting, filters, interactions, and business questions. It uses built-in Desktop visuals and existing measures; implementation is pending.
-
-## Report Interactions
-
-Follow [the shared interaction guide](docs/report_interactions.md) to sync the
-visible Date, Category, Region, and Channel slicers across all three pages. Product
-stays local to Product Performance. The guide covers native page navigation,
-revenue/profit/orders tooltips, chart filtering, and per-page reset bookmarks.
-All interaction setup and verification in Desktop remain pending.
-
-## Report Design
-
-The [report theme](powerbi/theme/retail_theme.json) uses navy, teal, white, and
-light gray with Segoe UI fonts. Follow [the design system](docs/design_system.md)
-for the 16:9 layout, KPI cards, chart colors, spacing, and LKR formatting.
-Theme import and visual verification in Power BI Desktop remain pending.
-
-## Dashboard Screenshots
-
-Add actual screenshots after building the report in Power BI Desktop:
-
-| Page | Screenshot to add |
-| --- | --- |
-| Executive Overview | `docs/screenshots/executive_overview.png` |
-| Product Performance | `docs/screenshots/product_performance.png` |
-| Regional & Channel | `docs/screenshots/regional_channel.png` |
-
-> Screenshots are not included yet. Do not use stock dashboard images as evidence of completed project work.
-
-## Repository Structure
+## Project structure
 
 ```text
 Retail-Sales-Business-Performance-Dashboard/
@@ -206,14 +94,19 @@ Retail-Sales-Business-Performance-Dashboard/
 ├── .gitignore
 ├── data/
 │   ├── README.md
-│   ├── raw/                       # Fact sales and four dimensions
-│   └── processed/
+│   ├── raw/
+│   │   ├── fact_sales.csv
+│   │   ├── dim_products.csv
+│   │   ├── dim_customers.csv
+│   │   ├── dim_regions.csv
+│   │   └── dim_channels.csv
+│   └── processed/                   # Reserved; .gitkeep only
 ├── scripts/
 │   ├── generate_data.py
 │   ├── profile_data.py
 │   └── generate_insights.py
 ├── powerbi/
-│   ├── queries/
+│   ├── queries/                     # Five M source scripts
 │   ├── measures/
 │   │   ├── core_measures.dax
 │   │   └── time_measures.dax
@@ -227,87 +120,169 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── data_model.md
     ├── dax_guide.md
     ├── design_system.md
+    ├── power_query_setup.md
+    ├── powerbi_desktop_build_steps.md
     ├── page_01_executive_overview.md
     ├── page_02_product_performance.md
     ├── page_03_regional_channel.md
     ├── report_interactions.md
-    ├── power_query_setup.md
-    ├── powerbi_desktop_build_steps.md
-    └── screenshots/
+    └── screenshots/                 # .gitkeep only; no screenshots yet
 ```
 
-Empty folders contain `.gitkeep` files so Git preserves the structure. Add the actual Power BI report files only when they have been created in Desktop.
+The tree lists existing files and folders. Empty folders use `.gitkeep` so Git
+preserves them. See [the project plan](docs/project_plan.md) for scope and naming.
 
-## Getting Started
+## Star schema
 
-From the project root, create a Python environment and install dependencies:
+The intended model places **FactSales** at the center, with one row per order
+line and `SalesLineID` as its key. `OrderID` groups lines belonging to one order.
 
-```sh
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
+| Dimension key: one side | FactSales key: many side |
+| --- | --- |
+| DimProducts[ProductID] | FactSales[ProductID] |
+| DimCustomers[CustomerID] | FactSales[CustomerID] |
+| DimRegions[RegionID] | FactSales[RegionID] |
+| DimChannels[ChannelID] | FactSales[ChannelID] |
+| DimDate[Date] | FactSales[OrderDate] |
+
+Configure all five planned relationships as active, **one-to-many**, with
+**single-direction filtering from dimension to fact**. Keep DimCustomers[RegionID] as reference
+information without another active region-to-customer relationship.
+
+[The model guide](docs/data_model.md) provides a Mermaid diagram and the DAX for
+DimDate: one row per day from **2025-01-01 through 2026-12-31**, including days
+without sales. It also explains marking the Date table and chronological month
+sorting. The table and relationships still need to be created in Desktop.
+
+## Measures and calculation rules
+
+The M scripts define these line calculations for FactSales; Desktop execution is pending:
+
+```text
+GrossSales = Quantity × UnitPrice
+NetSales   = GrossSales − DiscountAmount
+TotalCost  = Quantity × UnitCost
+LineProfit = NetSales − TotalCost
 ```
 
-On Windows, activate the environment with `.venv\Scripts\activate` instead.
+DiscountAmount is a complete line discount and is deducted once. Monetary
+measures sum these prepared columns; unit prices are not multiplied a second time.
 
-Generate the five raw CSV files (this script uses only the Python standard library):
+| Core measure | Definition |
+| --- | --- |
+| Gross Revenue | Sum of GrossSales |
+| Total Revenue | Sum of NetSales, after discounts |
+| Total Cost | Sum of TotalCost |
+| Total Profit | Sum of LineProfit |
+| Profit Margin % | Total Profit ÷ Total Revenue |
+| Total Orders | Distinct count of OrderID |
+| Units Sold | Sum of Quantity |
+| Average Order Value | Total Revenue ÷ distinct orders |
+| Total Discount | Sum of DiscountAmount |
+
+[core_measures.dax](powerbi/measures/core_measures.dax) contains these nine measures.
+[time_measures.dax](powerbi/measures/time_measures.dax) adds **Sales Previous Month,
+Sales MoM Change, Sales MoM %, Sales Previous Year, Sales YoY %, and Sales YTD**.
+The [DAX guide](docs/dax_guide.md) documents formats, blank comparisons, and
+partial-period assumptions. All DAX definitions await Desktop evaluation.
+
+## Three dashboard pages
+
+These are complete build specifications; the visuals have not been built or
+verified in Desktop. Each page uses the navy/teal [theme](powerbi/theme/retail_theme.json)
+and a 16:9 layout described in the [design system](docs/design_system.md).
+
+| Planned page and specification | Main content |
+| --- | --- |
+| [Executive Overview](docs/page_01_executive_overview.md) | Revenue, profit, margin, orders, and AOV cards; monthly revenue; category/channel sales; region ranking |
+| [Product Performance](docs/page_02_product_performance.md) | Units, revenue, and margin cards; Top 10 products; category revenue vs profit; low-margin review table; category trends |
+| [Regional & Channel](docs/page_03_regional_channel.md) | Regional revenue, orders, and AOV cards; region/representative-city and channel bars; monthly regional trends; region-by-category matrix |
+
+The [interaction guide](docs/report_interactions.md) specifies synchronized Date,
+Category, Region, and Channel slicers, a local Product slicer, native page
+navigation, revenue/profit/orders tooltips, and reset bookmarks. Product Performance's
+below-28% margin threshold is a demonstration review rule, not a real business target.
+
+## Setup and reproduction
+
+Use Python 3 and run commands from this repository's root folder. The five CSVs
+are already included. To reproduce the dataset and regenerate its two reports:
 
 ```sh
 python3 scripts/generate_data.py
-```
-
-The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; core and time-intelligence DAX definitions are in `powerbi/measures/`; the report theme is in `powerbi/theme/retail_theme.json`. See [the project plan](docs/project_plan.md) for their intended locations.
-
-Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
-[data dictionary](docs/data_dictionary.md) for column definitions and the
-[data profile](docs/data_profile.md) for quality checks and revenue estimates.
-
-Build the actual project by following [the Desktop build steps](docs/powerbi_desktop_build_steps.md). PBIP/PBIR/TMDL generation, refresh, report rendering, and reopening are pending in Windows Desktop. No report has been opened or verified in this workspace.
-
-## Validation Checklist
-
-Before presenting this project to recruiters, verify that:
-
-- [ ] The dataset loads without errors.
-- [ ] The data types and relationships are correct.
-- [ ] Revenue = sum of (quantity × unit price) minus line discounts.
-- [ ] Profit = revenue − cost.
-- [ ] Order counts use distinct order IDs.
-- [ ] Date, product, and region slicers filter the expected visuals.
-- [ ] Monthly calculations are accurate for the selected date range.
-- [ ] All dashboard pages are readable and professionally formatted.
-- [ ] Actual dashboard screenshots are added to `docs/screenshots/`.
-- [ ] Key business findings are recorded in `docs/business_insights.md`.
-
-## Business Insights
-
-[Business insights](docs/business_insights.md) contains five calculated findings,
-a metrics table, and three recommendations for the **synthetic portfolio scenario**.
-The figures come directly from the five raw CSV files; they are not real business
-results or evidence of Power BI Desktop execution.
-
-Regenerate the report from the project root:
-
-```sh
+python3 scripts/profile_data.py
 python3 scripts/generate_insights.py
 ```
 
-The script uses decimal arithmetic, deducts each line discount once, counts
-distinct orders, and preserves the source files. It uses only the Python standard
-library and replaces `docs/business_insights.md` after successful calculation.
+On Windows, use `py` in place of `python3` if that is your Python launcher.
+The generator replaces the five raw CSVs using the fixed seed. Profiling writes
+the data profile; insight generation writes the business insights. Those two
+scripts preserve source CSVs. No Power BI installation is needed for this analysis.
 
-## Possible Future Improvements
+For the Power BI build, use **Windows Power BI Desktop** and follow
+[powerbi_desktop_build_steps.md](docs/powerbi_desktop_build_steps.md). It explains
+how to load the five M queries, set the **DataFolder** parameter to the local
+[data/raw/](data/raw/) folder, create DimDate and relationships, add measures,
+import the theme, build pages, and save/reopen a genuine PBIP using PBIR and TMDL.
+The [Power Query guide](docs/power_query_setup.md) provides the detailed import steps.
+Changing computers requires updating DataFolder and refreshing in Desktop.
 
-- Introduce sales targets and variance analysis.
-- Add year-over-year comparisons.
-- Add customer segmentation and repeat-purchase analysis.
-- Automate dataset refresh when using a supported published environment.
-- Include a separate drill-through page for product details.
+## Calculated business insights
 
-## About This Project
+**These figures are from synthetic portfolio data, not real business results.**
+They come from the checked-in [generated insights](docs/business_insights.md),
+calculated directly from the CSVs with decimal arithmetic and distinct order counts.
 
-This is a self-directed portfolio project created to practice the end-to-end **Business Intelligence workflow**: importing data, cleaning it, designing a model, creating measures, developing dashboards, and interpreting results.
+| Metric | Calculated result |
+| --- | ---: |
+| Total Revenue | LKR 12,348,732.29 |
+| Total Profit | LKR 3,460,061.52 |
+| Profit Margin % | 28.02% |
+| Total Orders | 2,453 |
+| Average Order Value | LKR 5,034.13 |
 
-**Author:** Add your name and GitHub profile URL here.
+- **April 2026** had the highest monthly net revenue: **LKR 962,743.97**.
+- **Small Appliances** contributed **48.66%** of net revenue.
+- **Western** contributed **29.10%** of net revenue.
+- **Physical Store** contributed **62.03%** of net revenue.
 
-**Note:** If you used Codex or another AI tool, be prepared to explain the data model, DAX measures, dashboard design decisions, and business insights in your own words during interviews.
+The full report contains five factual findings and three recommendations for the
+fictional scenario. These calculations do not demonstrate that a dashboard was
+executed in Power BI or establish causes such as stockouts or campaign effects.
+
+## Screenshots
+
+| Page | Screenshot placeholder |
+| --- | --- |
+| Executive Overview | Pending Desktop build and capture |
+| Product Performance | Pending Desktop build and capture |
+| Regional & Channel | Pending Desktop build and capture |
+
+[docs/screenshots/](docs/screenshots/) currently contains only `.gitkeep`.
+Genuine screenshots will be added after the actual pages render in Desktop.
+There are no stock images, mock screenshots, or links to nonexistent image files.
+
+## Key learning outcomes
+
+The completed supporting materials demonstrate practice in:
+
+- Reproducible synthetic data generation and a clear fact/dimension data contract.
+- Checking missing values, primary keys, foreign keys, and order-line consistency.
+- Calculating net revenue, profit, weighted margin, and distinct order metrics correctly.
+- Designing reusable M/DAX assets, a star schema, and consistent visual interactions.
+- Writing business findings backed by computed values and documenting their limits.
+
+Hands-on Desktop model assembly, visualization, refresh, and interaction testing
+are the next practical milestone before presenting this as a completed dashboard.
+
+## Future improvements
+
+- Finish and verify the Desktop report, then add genuine page screenshots.
+- Extend the synthetic dataset to complete comparison years.
+- Add synthetic sales targets and variance analysis.
+- Explore repeat purchases and customer-segment performance.
+- Add a product drill-through page and a documented refresh workflow.
+
+This is a self-directed learning and BI internship portfolio project. Its strength
+is a traceable path from synthetic source records to calculations, design choices,
+and a clearly documented implementation plan.
