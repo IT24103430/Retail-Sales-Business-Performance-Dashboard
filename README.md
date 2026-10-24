@@ -210,7 +210,8 @@ Retail-Sales-Business-Performance-Dashboard/
 │   └── processed/
 ├── scripts/
 │   ├── generate_data.py
-│   └── profile_data.py
+│   ├── profile_data.py
+│   └── generate_insights.py
 ├── powerbi/
 │   ├── queries/
 │   ├── measures/
@@ -222,6 +223,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── project_plan.md
     ├── data_dictionary.md
     ├── data_profile.md
+    ├── business_insights.md
     ├── data_model.md
     ├── dax_guide.md
     ├── design_system.md
@@ -279,13 +281,20 @@ Before presenting this project to recruiters, verify that:
 
 ## Business Insights
 
-After completing the dashboard, replace these prompts with **findings backed by your report**:
+[Business insights](docs/business_insights.md) contains five calculated findings,
+a metrics table, and three recommendations for the **synthetic portfolio scenario**.
+The figures come directly from the five raw CSV files; they are not real business
+results or evidence of Power BI Desktop execution.
 
-1. **Sales trend:** Which month had the highest revenue, and what was the change from the previous month?
-2. **Product performance:** Which category contributed most to revenue and profit?
-3. **Regional performance:** Which region performed best, and where might improvement be possible?
+Regenerate the report from the project root:
 
-Add a short recommendation alongside each finding. Because the dataset is synthetic, present these findings as a **demonstration of analytical skills**, not as real-world company results.
+```sh
+python3 scripts/generate_insights.py
+```
+
+The script uses decimal arithmetic, deducts each line discount once, counts
+distinct orders, and preserves the source files. It uses only the Python standard
+library and replaces `docs/business_insights.md` after successful calculation.
 
 ## Possible Future Improvements
 

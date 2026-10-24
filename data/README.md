@@ -47,3 +47,13 @@ python3 scripts/profile_data.py
 
 The profiler reports row counts, coverage, missing values, key issues, basic
 generation checks, and revenue estimates without changing the CSV files.
+
+Generate the [calculated synthetic business insights](../docs/business_insights.md)
+from the current CSVs with:
+
+```sh
+python3 scripts/generate_insights.py
+```
+
+This writes five factual findings, a metrics table, and three portfolio
+recommendations. It preserves all source CSVs and does not require Power BI Desktop.
