@@ -61,6 +61,7 @@ slicer controls. Clear Product if a changed Category gives an empty intersection
 | A chart bar, trend point, or table/matrix value cell | Filter the page's KPI cards and other analytical visuals |
 | A regional matrix value cell | Pass both region and category to other analytical visuals |
 | A regional small-multiple point | Pass both region and month to other analytical visuals |
+| A regional small-multiple panel title | Pass only that panel's region to other analytical visuals |
 | Any chart/table/matrix selection | None on all slicer controls, navigation, and text |
 | KPI card | No outgoing filtering |
 | Hierarchy drill/expand action | Stay local to that visual; do not apply drill filters to the whole page |
