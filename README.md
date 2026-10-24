@@ -138,10 +138,14 @@ See [the Executive Overview specification](docs/page_01_executive_overview.md) f
 
 Explore which products drive sales:
 
+- KPI cards: Units Sold, Total Revenue, and Profit Margin %
 - Top 10 products by revenue
-- Revenue and profit by category
-- Quantity sold by product
-- Product profitability comparisons
+- Revenue vs profit by category
+- Low-margin products review table
+- Monthly revenue by category
+- Product and category slicers
+
+See [the Product Performance specification](docs/page_02_product_performance.md) for field assignments, sorting, visual filters, conditional formatting, and business questions. It reuses existing measures; Desktop implementation is pending.
 
 ### 3. Regional Sales Analysis
 
@@ -200,6 +204,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── dax_guide.md
     ├── design_system.md
     ├── page_01_executive_overview.md
+    ├── page_02_product_performance.md
     ├── power_query_setup.md
     └── screenshots/
 ```
