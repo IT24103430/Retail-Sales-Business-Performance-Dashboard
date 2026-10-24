@@ -155,7 +155,8 @@ uses selected category revenue per order containing those selected lines.
 - **Layout:** Use a **2 × 2 grid**, synchronized axes, and vertical scrolling to
   access all nine regions. A Region slicer selection reduces the panels. Use
   navy lines and small markers, with 11–12 pt region titles; avoid nine overlaid
-  lines distinguished only by color. Focus mode can provide a larger view.
+  lines distinguished only by color. If a horizontal month scrollbar appears,
+  hold Shift while scrolling the mouse wheel to move the categorical axes together.
 - **Interpretation:** All panels use the same revenue scale. A partial date
   selection produces partial first/last months; 2026 is a partial sales year.
   Do not imply that missing months mean zero sales or calculate full-year growth
@@ -214,7 +215,9 @@ Use **Format → Edit interactions** to configure these behaviors:
 
 Choose **Filter**, not Highlight. A matrix value-cell selection passes both its
 region and category; a region row label passes the region. A trend point passes
-its month and region. Clear the visual selection to restore the slicer-defined
+its month and region; selecting a small-multiple panel title passes only its
+region. See Microsoft's [small-multiple interaction guide](https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-small-multiples-interact).
+Clear the visual selection to restore the slicer-defined
 context. Slicer controls stay unchanged when analytical visuals are selected.
 Keep drill actions local to C1 rather than making hierarchy expansion filter
 the whole page; use slicers to build explicit combined selections. The settings
