@@ -17,8 +17,9 @@ is synthetic and all money is in Sri Lankan rupees (LKR).
   cards or visual containers**. Use an 8 px spacing unit for smaller adjustments.
 - Use the same reading order on each page: page title and short subtitle, a
   compact slicer row, key figures, then the main charts.
-- Keep Date, Region, and Category slicers in consistent positions. Use clear
-  labels and dropdowns where lists are long; show the selected date period.
+- Keep Date, Category, Region, and Channel slicers in that order and in consistent
+  positions. Use clear labels and dropdowns where lists are long; show the selected
+  date period.
 - Executive Overview uses **five KPI cards and four charts**, plus four slicers,
   as specified in its page guide. On its 1600 px canvas, cards are about 298 px
   wide and chart columns are 768 px wide, with the margins and gutters above.

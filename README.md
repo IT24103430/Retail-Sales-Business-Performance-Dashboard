@@ -43,6 +43,7 @@ The scenario is fictional; it does not represent an actual retailer's results.
 | Power Query, DAX, theme | [Queries](powerbi/queries/), [measures](powerbi/measures/), [theme](powerbi/theme/retail_theme.json) | Source assets prepared; Desktop testing pending |
 | Model and report design | [Model guide](docs/data_model.md), three page specifications, [design system](docs/design_system.md) | Documented; Desktop implementation pending |
 | Working report and screenshots | [Desktop build instructions](docs/powerbi_desktop_build_steps.md) | PBIP/PBIR/TMDL creation, refresh, rendering, and reopening pending |
+| Final source and data review | [Final handover](docs/final_handover.md) | Data, reproducibility, source references, theme schemas, and repository checks passed; Desktop acceptance pending |
 
 These statuses distinguish executed Python analysis from supporting materials
 awaiting Power BI Desktop. The existing model diagram and wireframes describe the
@@ -126,6 +127,9 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── page_02_product_performance.md
     ├── page_03_regional_channel.md
     ├── report_interactions.md
+    ├── interview_prep.md
+    ├── cv_project_description.md
+    ├── final_handover.md
     └── screenshots/                 # .gitkeep only; no screenshots yet
 ```
 
@@ -226,6 +230,12 @@ how to load the five M queries, set the **DataFolder** parameter to the local
 import the theme, build pages, and save/reopen a genuine PBIP using PBIR and TMDL.
 The [Power Query guide](docs/power_query_setup.md) provides the detailed import steps.
 Changing computers requires updating DataFolder and refreshing in Desktop.
+
+The [final handover](docs/final_handover.md) records the completed review, exact
+remaining Desktop actions, screenshot capture, and GitHub publishing steps.
+[Interview preparation](docs/interview_prep.md) and the
+[CV project entry](docs/cv_project_description.md) describe the work without
+claiming a finished or verified Desktop report.
 
 ## Calculated business insights
 

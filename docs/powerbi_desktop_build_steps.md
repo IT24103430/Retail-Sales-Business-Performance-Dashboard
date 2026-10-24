@@ -23,11 +23,10 @@ source assets are preserved; no PBIP/PBIR/TMDL or PBIX artifact was fabricated.
 | Report | Three page specifications and report-wide interaction instructions | Build visuals, slicer synchronization, navigation, tooltips, reset bookmarks |
 | PBIP/PBIR/TMDL | Official formats reviewed; target structure described below | Let Desktop generate the actual project files and verify reopening |
 
-The review was a relevant source inspection, not comprehensive final QA. Several
-iCloud source placeholders were restored from GitHub with matching Git blob
-hashes; their committed contents were preserved. Local Git metadata still has
-iCloud placeholders, so repository synchronization must be completed after those
-files are downloaded. This does not make any Desktop work complete.
+For the comprehensive source/data review results, verified source-based totals,
+GitHub status, and remaining Desktop acceptance checks, see
+[final_handover.md](final_handover.md). The source files are preserved and local
+Git metadata has been reconciled with GitHub. Desktop work remains pending.
 
 ## 1. Prepare a supported Windows environment
 
@@ -275,8 +274,8 @@ report-wide interaction guide:
    results from the source profile, not completed Desktop tests.
 5. Record the actual Desktop version and the successful open/refresh result in
    the project status only after doing it. Capture genuine screenshots in
-   `docs/screenshots/` only after the pages render. Save comprehensive testing
-   for the final QA step.
+   `docs/screenshots/` only after the pages render. Complete the Desktop acceptance
+   checks in [final_handover.md](final_handover.md) before changing the project status.
 
 ## Supported editing boundary after the scaffold exists
 
