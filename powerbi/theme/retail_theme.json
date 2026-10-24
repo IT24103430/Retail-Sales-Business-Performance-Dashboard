@@ -1,0 +1,85 @@
+{
+  "name": "Retail Sales Analytics - Navy and Teal",
+  "dataColors": [
+    "#17324D",
+    "#007A75",
+    "#536878",
+    "#326A8C",
+    "#3E7974",
+    "#6B7280"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#17324D",
+  "tableAccent": "#007A75",
+  "secondLevelElements": "#52616B",
+  "thirdLevelElements": "#E3E9EE",
+  "fourthLevelElements": "#52616B",
+  "secondaryBackground": "#F3F5F7",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#17324D"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#17324D"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#17324D"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#17324D"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#52616B"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#52616B"
+    },
+    "smallLightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#52616B"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F5F7"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

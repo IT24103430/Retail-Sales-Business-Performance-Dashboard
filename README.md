@@ -4,7 +4,7 @@ A **Business Intelligence portfolio project** focused on transforming retail tra
 
 This project is designed to demonstrate practical skills in **data preparation, data modeling, DAX, data visualization, and business analysis** for a Business Intelligence internship.
 
-> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, core DAX measures, and time-intelligence measures created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
+> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, core DAX measures, time-intelligence measures, and the report theme created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
 
 The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
 
@@ -149,6 +149,13 @@ Compare performance across regions:
 - Monthly trends by region
 - Interactive filters for categories and dates
 
+## Report Design
+
+The [report theme](powerbi/theme/retail_theme.json) uses navy, teal, white, and
+light gray with Segoe UI fonts. Follow [the design system](docs/design_system.md)
+for the 16:9 layout, KPI cards, chart colors, spacing, and LKR formatting.
+Theme import and visual verification in Power BI Desktop remain pending.
+
 ## Dashboard Screenshots
 
 Add actual screenshots after building the report in Power BI Desktop:
@@ -181,12 +188,14 @@ Retail-Sales-Business-Performance-Dashboard/
 │   │   ├── core_measures.dax
 │   │   └── time_measures.dax
 │   └── theme/
+│       └── retail_theme.json
 └── docs/
     ├── project_plan.md
     ├── data_dictionary.md
     ├── data_profile.md
     ├── data_model.md
     ├── dax_guide.md
+    ├── design_system.md
     ├── power_query_setup.md
     └── screenshots/
 ```
@@ -211,7 +220,7 @@ Generate the five raw CSV files (this script uses only the Python standard libra
 python3 scripts/generate_data.py
 ```
 
-The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; core and time-intelligence DAX definitions are in `powerbi/measures/`; a theme remains for a later step. See [the project plan](docs/project_plan.md) for their intended locations.
+The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; core and time-intelligence DAX definitions are in `powerbi/measures/`; the report theme is in `powerbi/theme/retail_theme.json`. See [the project plan](docs/project_plan.md) for their intended locations.
 
 Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
 [data dictionary](docs/data_dictionary.md) for column definitions and the
