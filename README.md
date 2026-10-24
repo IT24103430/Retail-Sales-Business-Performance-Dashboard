@@ -12,13 +12,18 @@ All monetary values use **Sri Lankan rupees (LKR)**.
 > dashboard specifications are prepared. **No Power BI dashboard has been opened,
 > refreshed, rendered, or verified in Desktop. No PBIP or PBIX report exists.**
 
+**Review the project:** [Calculated insights](docs/business_insights.md) ·
+[Data quality profile](docs/data_profile.md) ·
+[Page specifications](#three-dashboard-pages) ·
+[Desktop build steps](docs/powerbi_desktop_build_steps.md).
+
 ## Business problem
 
 Retail transaction files contain useful detail, but managers need a clear view of
 sales trends, profitability, product performance, and regional/channel results.
 This project explores how a BI workflow can answer:
 
-- How much revenue and profit remain after discounts and product costs?
+- What revenue remains after discounts, and what profit remains after product costs?
 - Which months, products, and categories contribute the most sales?
 - Which regions and channels perform strongly, and where should margins be reviewed?
 - How many distinct orders were placed, and what is their average value?
@@ -171,6 +176,8 @@ LineProfit = NetSales − TotalCost
 
 DiscountAmount is a complete line discount and is deducted once. Monetary
 measures sum these prepared columns; unit prices are not multiplied a second time.
+Total Profit excludes rent, wages, and other operating expenses; it means profit
+after product costs in this project.
 
 | Core measure | Definition |
 | --- | --- |
@@ -209,8 +216,10 @@ below-28% margin threshold is a demonstration review rule, not a real business t
 
 ## Setup and reproduction
 
-Use Python 3 and run commands from this repository's root folder. The five CSVs
-are already included. To reproduce the dataset and regenerate its two reports:
+The five CSVs, [data profile](docs/data_profile.md), and
+[business insights](docs/business_insights.md) are included, so you can review the
+results immediately. To reproduce them, use Python 3 and run these commands from
+the repository's root folder; no third-party Python packages are required:
 
 ```sh
 python3 scripts/generate_data.py
