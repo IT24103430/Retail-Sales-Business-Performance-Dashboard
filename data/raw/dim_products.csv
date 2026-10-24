@@ -1,0 +1,31 @@
+ProductID,ProductName,Category
+P001,Samba Rice 5 kg,Groceries
+P002,Red Raw Rice 1 kg,Groceries
+P003,Red Lentils 1 kg,Groceries
+P004,Coconut Oil 750 ml,Groceries
+P005,Coconut Milk Powder 300 g,Groceries
+P006,Curry Powder 100 g,Groceries
+P007,White Sugar 1 kg,Groceries
+P008,Wheat Flour 1 kg,Groceries
+P009,Cream Crackers 400 g,Groceries
+P010,String Hopper Flour 1 kg,Groceries
+P011,Black Tea 200 g,Beverages
+P012,Instant Coffee 100 g,Beverages
+P013,Ginger Drink 1 L,Beverages
+P014,Mango Nectar 1 L,Beverages
+P015,Drinking Water 1.5 L,Beverages
+P016,Laundry Powder 1 kg,Household
+P017,Dishwashing Liquid 500 ml,Household
+P018,Floor Cleaner 1 L,Household
+P019,Kitchen Towels 2 Pack,Household
+P020,Food Storage Box 1 L,Household
+P021,Herbal Soap 100 g,Personal Care
+P022,Shampoo 200 ml,Personal Care
+P023,Toothpaste 120 g,Personal Care
+P024,Hand Wash 250 ml,Personal Care
+P025,Exercise Book 160 Pages,Stationery
+P026,Blue Ballpoint Pens 5 Pack,Stationery
+P027,Colour Pencils 12 Pack,Stationery
+P028,Electric Kettle 1.7 L,Small Appliances
+P029,Rice Cooker 1.8 L,Small Appliances
+P030,Table Fan 16 Inch,Small Appliances

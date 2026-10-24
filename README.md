@@ -4,7 +4,7 @@ A **Business Intelligence portfolio project** focused on transforming retail tra
 
 This project is designed to demonstrate practical skills in **data preparation, data modeling, DAX, data visualization, and business analysis** for a Business Intelligence internship.
 
-> **Project status:** Initial folder structure and project plan created. Data generation, transformation, and dashboard development are pending. No Power BI report has been created or verified.
+> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, and Power Query scripts created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
 
 The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
 
@@ -41,56 +41,60 @@ The dashboard is intended to answer questions such as:
 
 ## Dataset
 
-The proposed dataset contains **5,000 synthetic retail sales records** in a Sri Lankan retail context. Python will generate the data; no real customer information will be used.
+The dataset contains **5,000 synthetic order-line records** from **2025-01-01 through 2026-09-30** in a Sri Lankan retail context. No real customer information is used.
 
-**Planned raw file:** `data/raw/retail_sales.csv`  
-**Planned processed file:** `data/processed/retail_sales_clean.csv`
+Raw files are `data/raw/fact_sales.csv`, `data/raw/dim_products.csv`, `data/raw/dim_customers.csv`, `data/raw/dim_regions.csv`, and `data/raw/dim_channels.csv`.
 
-| Column | Description |
+| Fact column | Description |
 | --- | --- |
-| `OrderID` | Unique order identifier (may repeat across order line items) |
-| `OrderDate` | Date of the transaction |
-| `CustomerID` | Anonymous customer identifier |
-| `ProductID` | Unique product identifier |
-| `ProductName` | Name of the item sold |
-| `Category` | Product category |
-| `Region` | Sales region |
+| `SalesLineID` | Unique order-line identifier |
+| `OrderID` | Order identifier shared by its line items |
+| `OrderDate` | Transaction date in YYYY-MM-DD format |
+| `ProductID` | Key to the product dimension |
+| `CustomerID` | Key to the synthetic customer dimension |
+| `RegionID` | Key to the region dimension |
+| `ChannelID` | Key to the channel dimension |
 | `Quantity` | Number of units sold |
-| `UnitPrice` | Selling price per unit |
-| `UnitCost` | Cost per unit |
+| `UnitPrice` | Selling price per unit in LKR, before discount |
+| `UnitCost` | Cost per unit in LKR |
+| `DiscountAmount` | Total discount for the line in LKR |
 
-**Data note:** Revenue and profit should be calculated from the numeric columns rather than assumed to exist in the source file. Unit prices, unit costs, revenue, and profit use LKR throughout the report.
+Revenue is calculated after discounts; profit is revenue minus cost. See [the data README](data/README.md) for dimension columns and generation assumptions. Processed data will be added in a later step.
 
 ## Data Preparation
 
-Planned cleaning and transformation steps in **Power Query**:
+The scripts in `powerbi/queries/` prepare the CSV tables in **Power Query**:
 
 - Correct column data types, especially dates and numeric values.
 - Check for missing order IDs, dates, product IDs, and prices.
 - Remove exact duplicate transaction rows when appropriate.
 - Validate that quantities and prices are sensible.
-- Standardize category and region values.
-- Prepare fact and dimension tables for analysis.
+- Check category and region labels in the dimension files.
+- Prepare the supplied fact and dimension tables for analysis.
+- Add GrossSales, NetSales, TotalCost, and LineProfit to FactSales.
+
+Follow [the Power Query setup guide](docs/power_query_setup.md) to create DataFolder and paste each query. Desktop execution is pending.
 
 ## Data Model
 
 A **star schema** is recommended:
 
-- **FactSales:** Order line items, dates, IDs, quantities, unit prices, and unit costs.
+- **FactSales:** Order line items, dates, foreign keys, quantities, unit prices, unit costs, and line discounts.
 - **DimDate:** Calendar dates, month, quarter, and year.
-- **DimProduct:** Product details and categories.
-- **DimCustomer:** Anonymous customer identifiers.
-- **DimRegion:** Region identifiers and names.
+- **DimProducts:** Product details and categories.
+- **DimCustomers:** Anonymous customer identifiers.
+- **DimRegions:** Region identifiers, names, and representative cities.
+- **DimChannels:** Sales channel identifiers and names.
 
 Link each dimension to `FactSales` with an appropriate **one-to-many relationship**. Use a dedicated, continuous date table for time intelligence.
 
-> If the data is initially stored in one CSV file, create the dimension tables from distinct values, add surrogate IDs where needed, and confirm that each dimension key is unique.
+> Load the five supplied CSV files as the corresponding tables. Create DimDate in a later modeling step. RegionID is also present in the customer file; use the direct DimRegions-to-FactSales relationship and avoid an additional active region-to-customer filter path.
 
 ## Key Performance Indicators (KPIs)
 
 | KPI | Definition |
 | --- | --- |
-| Total Revenue | Sum of `Quantity × UnitPrice` |
+| Total Revenue | Sum of `(Quantity × UnitPrice) − DiscountAmount` |
 | Total Cost | Sum of `Quantity × UnitCost` |
 | Total Profit | Total Revenue − Total Cost |
 | Profit Margin | Total Profit ÷ Total Revenue |
@@ -106,7 +110,7 @@ The following examples assume the fact table is named `FactSales` and the calend
 Total Revenue =
 SUMX(
     FactSales,
-    FactSales[Quantity] * FactSales[UnitPrice]
+    FactSales[Quantity] * FactSales[UnitPrice] - FactSales[DiscountAmount]
 )
 
 Total Cost =
@@ -192,15 +196,21 @@ Retail-Sales-Business-Performance-Dashboard/
 ├── requirements.txt
 ├── .gitignore
 ├── data/
-│   ├── raw/
+│   ├── README.md
+│   ├── raw/                       # Fact sales and four dimensions
 │   └── processed/
 ├── scripts/
+│   ├── generate_data.py
+│   └── profile_data.py
 ├── powerbi/
 │   ├── queries/
 │   ├── measures/
 │   └── theme/
 └── docs/
     ├── project_plan.md
+    ├── data_dictionary.md
+    ├── data_profile.md
+    ├── power_query_setup.md
     └── screenshots/
 ```
 
@@ -218,9 +228,19 @@ python -m pip install -r requirements.txt
 
 On Windows, activate the environment with `.venv\Scripts\activate` instead.
 
-Data generation scripts, CSV files, Power Query queries, DAX files, and a theme will be added in later steps. See [the project plan](docs/project_plan.md) for their intended locations.
+Generate the five raw CSV files (this script uses only the Python standard library):
 
-Building, refreshing, and validating the report in Power BI Desktop are pending. Desktop requires a Windows environment; no report has been opened or verified for this setup step.
+```sh
+python3 scripts/generate_data.py
+```
+
+The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; DAX files and a theme will be added in later steps. See [the project plan](docs/project_plan.md) for their intended locations.
+
+Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
+[data dictionary](docs/data_dictionary.md) for column definitions and the
+[data profile](docs/data_profile.md) for quality checks and revenue estimates.
+
+Building, refreshing, and validating the report in Power BI Desktop are pending. Desktop requires a Windows environment; no report has been opened or verified for this Power Query step.
 
 ## Validation Checklist
 
@@ -228,7 +248,7 @@ Before presenting this project to recruiters, verify that:
 
 - [ ] The dataset loads without errors.
 - [ ] The data types and relationships are correct.
-- [ ] Revenue = sum of quantity × unit price.
+- [ ] Revenue = sum of (quantity × unit price) minus line discounts.
 - [ ] Profit = revenue − cost.
 - [ ] Order counts use distinct order IDs.
 - [ ] Date, product, and region slicers filter the expected visuals.

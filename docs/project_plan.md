@@ -32,14 +32,14 @@ Use date, region, and category filters where relevant. Planned KPIs are Total Re
 ## Consistent file naming
 
 - Use lowercase `snake_case` for scripts, CSV files, documentation, query files, measure files, themes, and screenshots.
-- Planned data paths: `data/raw/retail_sales.csv` and `data/processed/retail_sales_clean.csv`. Keep one canonical file at each stage.
+- Raw data paths: `data/raw/fact_sales.csv`, `data/raw/dim_products.csv`, `data/raw/dim_customers.csv`, `data/raw/dim_regions.csv`, and `data/raw/dim_channels.csv`. Reserve `data/processed/` for prepared outputs; keep one canonical file per table at each stage.
 - Use descriptive script names such as `scripts/generate_data.py`; avoid names such as `final_v2.py`.
 - Use one shared measure file, `powerbi/measures/sales_measures.dax`, and one theme, `powerbi/theme/retail_sales_theme.json`.
 - Name the report `RetailSalesAnalytics.pbix` or `RetailSalesAnalytics.pbip` when it is actually created. Document the chosen format and keep one report source.
 - Name screenshots `executive_overview.png`, `product_performance.png`, and `regional_sales_analysis.png`.
-- Preserve the planned CSV columns: `OrderID`, `OrderDate`, `CustomerID`, `ProductID`, `ProductName`, `Category`, `Region`, `Quantity`, `UnitPrice`, and `UnitCost`.
-- Use `FactSales`, `DimDate`, `DimProduct`, `DimCustomer`, and `DimRegion` for model tables. Keep measure names consistent with the README.
+- Preserve fact columns: `SalesLineID`, `OrderID`, `OrderDate`, `ProductID`, `CustomerID`, `RegionID`, `ChannelID`, `Quantity`, `UnitPrice`, `UnitCost`, and `DiscountAmount`. Dimension labels live in the dimension files; see `data/README.md` for their columns. Revenue subtracts line discounts from gross sales.
+- Use `FactSales`, `DimDate`, `DimProducts`, `DimCustomers`, `DimRegions`, and `DimChannels` for model tables. Keep measure names consistent with the README.
 
 ## Current status
 
-Folder setup is complete. Data, scripts, queries, measures, theme, report, and screenshots remain to be built in later tasks. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
+Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. Executing the queries in Desktop, measures, theme, report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
