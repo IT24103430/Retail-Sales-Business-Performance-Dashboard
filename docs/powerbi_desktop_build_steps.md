@@ -3,9 +3,12 @@
 ## Review outcome: source assets ready, Desktop project pending
 
 The repository contains no `.pbip`, `.pbix`, `definition.pbir`, `definition.pbism`,
-or `.tmdl` scaffold to preserve or extend. This workspace runs macOS; a .NET SDK
-is present, but Power BI Desktop and its local model/refresh/rendering engine are
-not available. There is no existing Desktop-generated report metadata to reuse.
+or `.tmdl` scaffold to preserve or extend. This workspace runs macOS ARM64;
+.NET SDK **10.0.400** is present, but Power BI Desktop and its local
+model/refresh/rendering engine are not available. No callable Power BI tools,
+PowerShell, pbi-tools, or Wine were found. The SDK alone does not provide a
+Power BI report renderer. There is no existing Desktop-generated report metadata
+to reuse.
 
 Microsoft supports programmatic PBIR/TMDL editing, but a schema-valid JSON file
 alone does not establish that queries, DAX, report bindings, resources, and
@@ -22,6 +25,12 @@ source assets are preserved; no PBIP/PBIR/TMDL or PBIX artifact was fabricated.
 | Theme | `powerbi/theme/retail_theme.json` parses as JSON | Import, register resources, and inspect rendering |
 | Report | Three page specifications and report-wide interaction instructions | Build visuals, slicer synchronization, navigation, tooltips, reset bookmarks |
 | PBIP/PBIR/TMDL | Official formats reviewed; target structure described below | Let Desktop generate the actual project files and verify reopening |
+
+The current source check confirmed that the five M queries select the actual
+CSV headers and share DataFolder-based paths, all 15 measure definitions have
+unique names, and the model, theme, page and interaction assets exist. No PBIP/PBIR
+descriptors or TMDL model files were available for schema/model-load validation.
+These checks do not execute M or DAX and do not connect or refresh a Desktop model.
 
 For the comprehensive source/data review results, verified source-based totals,
 GitHub status, and remaining Desktop acceptance checks, see
@@ -298,7 +307,9 @@ not exclude PBIP/PBIR/TMDL source definitions. Keep one actual report source,
 not parallel PBIX and PBIP copies. If PBIX is ever explicitly needed, export it
 through Desktop; this step produces no PBIX.
 
-**Completed now:** repository/source review, recovery of identical committed
-source bytes, and this documented build path. **Pending:** actual PBIP/PBIR/TMDL
-generation, data connection/refresh, model loading, all three rendered pages,
-interactions, reopen verification, and screenshots in Windows Desktop.
+**Completed in this environment:** repository/tool inventory, source-contract
+checks, review of Microsoft's format documentation, and this Desktop build path.
+All existing CSV/M/DAX/theme and page-specification assets are preserved.
+**Pending:** actual PBIP/PBIR/TMDL generation, data connection/refresh, model
+loading, all three rendered pages, interactions, reopen verification, and
+screenshots in Windows Desktop.
