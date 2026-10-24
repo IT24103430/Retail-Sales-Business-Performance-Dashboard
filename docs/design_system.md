@@ -10,18 +10,20 @@ is synthetic and all money is in Sri Lankan rupees (LKR).
 - Use **16:9**, normally **1280 × 720 px**, on all three planned report pages.
   Select an empty canvas, open **Format page → Canvas settings**, and choose
   **Type → 16:9**. Keep wallpaper plain and the canvas light gray.
+  The [Executive Overview specification](page_01_executive_overview.md) uses a
+  roomier **1600 × 900 px Custom canvas**, also 16:9, for its requested visuals.
 - Leave **24 px outer margins**, **16 px between visuals**, and **16 px inside
   cards or visual containers**. Use an 8 px spacing unit for smaller adjustments.
 - Use the same reading order on each page: page title and short subtitle, a
   compact slicer row, key figures, then the main charts.
 - Keep Date, Region, and Category slicers in consistent positions. Use clear
   labels and dropdowns where lists are long; show the selected date period.
-- Executive Overview should use one row of four KPIs and two main chart columns.
-  On a 1280 px canvas, four cards can be **296 px wide** each; two chart columns
-  can be **608 px wide** each, with the margins and gutters above.
-- Use about **4–6 analytical visuals per page**, including KPI cards, plus the
-  slicers. Product and regional detail pages can use one wide ranking chart and
-  one supporting chart/table instead of adding more tiles.
+- Executive Overview uses **five KPI cards and four charts**, plus four slicers,
+  as specified in its page guide. On its 1600 px canvas, cards are about 298 px
+  wide and chart columns are 768 px wide, with the margins and gutters above.
+- Keep every visual tied to a business question. Product and regional detail
+  pages can use one wide ranking chart and one supporting chart/table instead
+  of adding more tiles; define their final layouts in their own specifications.
 - Align edges and use equal heights within rows. Avoid overlapping visuals,
   decorative icons, large logos, heavy shadows, and unnecessary borders.
 
@@ -43,6 +45,7 @@ Typography sizes below are in points; layout spacing above is in canvas pixels.
 
 The theme supplies shared text defaults. Set page-title text boxes, individual
 KPI labels, and any visual-specific sizes manually to follow this table.
+Executive Overview can use 24 pt KPI values to fit its five-card row at full LKR precision.
 Keep labels readable at Fit to page; reduce content before shrinking text.
 
 ## Color palette and chart rules
@@ -86,8 +89,8 @@ Use white cards, consistent height around **104–112 px**, 16 px internal paddi
 and square or lightly rounded corners (up to 4 px). Keep shadows off. White
 surfaces against the light-gray canvas provide enough grouping without outlines.
 
-The Executive Overview uses **Total Revenue**, **Total Profit**, **Total Orders**,
-and **Average Order Value**. Place each measure's label above or below its navy
+The Executive Overview uses **Total Revenue**, **Total Profit**, **Profit Margin %**,
+**Total Orders**, and **Average Order Value**. Place each measure's label above or below its navy
 value consistently. Use a small optional comparison note such as
 `MoM +4.20%` only when the comparison is defined; display an em dash for a blank
 comparison. Keep positive/negative signs visible and explain the comparison

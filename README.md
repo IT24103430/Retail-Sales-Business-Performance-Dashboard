@@ -125,11 +125,14 @@ Use [the data model guide](docs/data_model.md) to create and configure DimDate f
 
 A high-level view of business performance:
 
-- KPI cards: Revenue, Profit, Orders, and Average Order Value
+- KPI cards: Total Revenue, Total Profit, Profit Margin %, Total Orders, and Average Order Value
 - Monthly revenue trend line
 - Revenue by category
-- Top-performing products
-- Date, region, and category slicers
+- Revenue by sales channel
+- Regions ranked by revenue
+- Date, category, region, and channel slicers
+
+See [the Executive Overview specification](docs/page_01_executive_overview.md) for exact fields, filters, interactions, and its ASCII wireframe. Desktop implementation is pending.
 
 ### 2. Product Performance
 
@@ -196,6 +199,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── data_model.md
     ├── dax_guide.md
     ├── design_system.md
+    ├── page_01_executive_overview.md
     ├── power_query_setup.md
     └── screenshots/
 ```

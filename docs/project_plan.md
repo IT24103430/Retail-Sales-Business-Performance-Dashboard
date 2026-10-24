@@ -23,7 +23,7 @@ Use synthetic Sri Lankan retail sales data to explain sales trends, product prof
 
 | Page | Main questions and visuals |
 | --- | --- |
-| Executive Overview | Revenue, profit, order count, average order value, monthly revenue trend, and category contribution. |
+| Executive Overview | Five KPIs: revenue, profit, margin, orders, and average order value; monthly revenue, category and channel revenue, and region ranking, with date/category/region/channel slicers. See `docs/page_01_executive_overview.md`. |
 | Product Performance | Top products, units sold, category revenue, and product profitability. |
 | Regional Sales Analysis | Regional revenue, profit, revenue share, and monthly regional trends. |
 
@@ -42,4 +42,4 @@ Use date, region, and category filters where relevant. Planned KPIs are Total Re
 
 ## Current status
 
-Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. The star schema and DimDate instructions are in `docs/data_model.md`. The nine core DAX measures are prepared in `powerbi/measures/core_measures.dax` and six time-intelligence measures in `powerbi/measures/time_measures.dax`, with formatting, usage, and period assumptions in `docs/dax_guide.md`. The theme is prepared in `powerbi/theme/retail_theme.json`, with layout and formatting rules in `docs/design_system.md`. Executing queries and measures, importing the theme in Desktop, the report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
+Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. The star schema and DimDate instructions are in `docs/data_model.md`. The nine core DAX measures are prepared in `powerbi/measures/core_measures.dax` and six time-intelligence measures in `powerbi/measures/time_measures.dax`, with formatting, usage, and period assumptions in `docs/dax_guide.md`. The theme is prepared in `powerbi/theme/retail_theme.json`, with layout and formatting rules in `docs/design_system.md`. The Executive Overview build specification is in `docs/page_01_executive_overview.md`; it is not an implemented page. Executing queries and measures, importing the theme in Desktop, the report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
