@@ -147,14 +147,18 @@ Explore which products drive sales:
 
 See [the Product Performance specification](docs/page_02_product_performance.md) for field assignments, sorting, visual filters, conditional formatting, and business questions. It reuses existing measures; Desktop implementation is pending.
 
-### 3. Regional Sales Analysis
+### 3. Regional & Channel
 
-Compare performance across regions:
+Compare geographic and channel performance:
 
-- Revenue and profit by region
-- Regional share of total revenue
-- Monthly trends by region
-- Interactive filters for categories and dates
+- KPI cards: regional revenue, distinct orders, and average order value
+- Revenue by Sri Lankan region with representative city labels
+- Revenue by sales channel
+- Monthly regional revenue in native small multiples
+- Detailed region-by-category revenue matrix
+- Date, category, region, and channel slicers
+
+See [the Regional & Channel specification](docs/page_03_regional_channel.md) for exact fields, sorting, filters, interactions, and business questions. It uses built-in Desktop visuals and existing measures; implementation is pending.
 
 ## Report Design
 
@@ -171,7 +175,7 @@ Add actual screenshots after building the report in Power BI Desktop:
 | --- | --- |
 | Executive Overview | `docs/screenshots/executive_overview.png` |
 | Product Performance | `docs/screenshots/product_performance.png` |
-| Regional Sales Analysis | `docs/screenshots/regional_sales_analysis.png` |
+| Regional & Channel | `docs/screenshots/regional_channel.png` |
 
 > Screenshots are not included yet. Do not use stock dashboard images as evidence of completed project work.
 
@@ -205,6 +209,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── design_system.md
     ├── page_01_executive_overview.md
     ├── page_02_product_performance.md
+    ├── page_03_regional_channel.md
     ├── power_query_setup.md
     └── screenshots/
 ```

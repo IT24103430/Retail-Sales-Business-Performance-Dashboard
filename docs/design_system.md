@@ -7,11 +7,12 @@ is synthetic and all money is in Sri Lankan rupees (LKR).
 
 ## Page and layout
 
-- Use **16:9**, normally **1280 × 720 px**, on all three planned report pages.
-  Select an empty canvas, open **Format page → Canvas settings**, and choose
-  **Type → 16:9**. Keep wallpaper plain and the canvas light gray.
-  The [Executive Overview specification](page_01_executive_overview.md) uses a
-  roomier **1600 × 900 px Custom canvas**, also 16:9, for its requested visuals.
+- Use **16:9** on all three planned report pages. Their specifications use a
+  **1600 × 900 px Custom canvas** for readable charts and detailed tables.
+  Select an empty canvas, open **Format page → Canvas settings**, choose
+  **Type → Custom**, and enter those dimensions. Keep wallpaper plain and the
+  canvas light gray. The built-in 1280 × 720 px 16:9 size remains an alternative
+  for a simpler layout; use the specified 1600 × 900 size for these three pages.
 - Leave **24 px outer margins**, **16 px between visuals**, and **16 px inside
   cards or visual containers**. Use an 8 px spacing unit for smaller adjustments.
 - Use the same reading order on each page: page title and short subtitle, a
