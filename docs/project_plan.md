@@ -27,14 +27,14 @@ Use synthetic Sri Lankan retail sales data to explain sales trends, product prof
 | Product Performance | Top products, units sold, category revenue, and product profitability. |
 | Regional Sales Analysis | Regional revenue, profit, revenue share, and monthly regional trends. |
 
-Use date, region, and category filters where relevant. Planned KPIs are Total Revenue, Total Cost, Total Profit, Profit Margin %, Total Orders, Average Order Value, and Monthly Revenue Growth %.
+Use date, region, and category filters where relevant. Planned KPIs are Total Revenue, Total Cost, Total Profit, Profit Margin %, Total Orders, Average Order Value, Sales MoM %, Sales YoY %, and Sales YTD.
 
 ## Consistent file naming
 
 - Use lowercase `snake_case` for scripts, CSV files, documentation, query files, measure files, themes, and screenshots.
 - Raw data paths: `data/raw/fact_sales.csv`, `data/raw/dim_products.csv`, `data/raw/dim_customers.csv`, `data/raw/dim_regions.csv`, and `data/raw/dim_channels.csv`. Reserve `data/processed/` for prepared outputs; keep one canonical file per table at each stage.
 - Use descriptive script names such as `scripts/generate_data.py`; avoid names such as `final_v2.py`.
-- Keep core measure definitions in `powerbi/measures/core_measures.dax` and the single theme in `powerbi/theme/retail_sales_theme.json`.
+- Keep core measure definitions in `powerbi/measures/core_measures.dax`, time-intelligence definitions in `powerbi/measures/time_measures.dax`, and the single theme in `powerbi/theme/retail_sales_theme.json`.
 - Name the report `RetailSalesAnalytics.pbix` or `RetailSalesAnalytics.pbip` when it is actually created. Document the chosen format and keep one report source.
 - Name screenshots `executive_overview.png`, `product_performance.png`, and `regional_sales_analysis.png`.
 - Preserve fact columns: `SalesLineID`, `OrderID`, `OrderDate`, `ProductID`, `CustomerID`, `RegionID`, `ChannelID`, `Quantity`, `UnitPrice`, `UnitCost`, and `DiscountAmount`. Dimension labels live in the dimension files; see `data/README.md` for their columns. Revenue subtracts line discounts from gross sales.
@@ -42,4 +42,4 @@ Use date, region, and category filters where relevant. Planned KPIs are Total Re
 
 ## Current status
 
-Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. The star schema and DimDate instructions are in `docs/data_model.md`. The nine core DAX measures are prepared in `powerbi/measures/core_measures.dax`, with formatting and usage in `docs/dax_guide.md`. Executing queries and measures in Desktop, the theme, report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.
+Folder setup, synthetic data generation, the data dictionary, and the basic profile are complete. The five Power Query scripts and `docs/power_query_setup.md` are prepared, including GrossSales, NetSales, TotalCost, and LineProfit fact columns. The generator creates 5,000 order lines for 2025-01-01 through 2026-09-30. The star schema and DimDate instructions are in `docs/data_model.md`. The nine core DAX measures are prepared in `powerbi/measures/core_measures.dax` and six time-intelligence measures in `powerbi/measures/time_measures.dax`, with formatting, usage, and period assumptions in `docs/dax_guide.md`. Executing queries and measures in Desktop, the theme, report, and screenshots remain pending. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.

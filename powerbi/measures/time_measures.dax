@@ -1,0 +1,59 @@
+// Retail Sales Analytics: paste each definition separately using New measure.
+// Create core_measures.dax first. "Sales" always means [Total Revenue] after discounts.
+// Requires marked, contiguous DimDate and active DimDate[Date] -> FactSales[OrderDate].
+// Use DimDate fields for date filters; use one complete YearMonth for MoM comparisons.
+// DATEADD shifts the selected dates, not the last period that happened to have sales.
+// Date selections must be contiguous; non-date dimension filters remain in effect.
+// Calendar year: January 1 to December 31. Sales end September 30, 2026.
+// No automatic latest-sales-date cap or partial-period matching is applied.
+
+// Net revenue for the current date selection shifted back one calendar month.
+// Returns BLANK when the shifted period has no matching sales.
+Sales Previous Month =
+    CALCULATE (
+        [Total Revenue],
+        DATEADD ( DimDate[Date], -1, MONTH )
+    )
+
+// LKR change from the previous month; missing sales are not treated as zero.
+Sales MoM Change =
+    VAR CurrentSales = [Total Revenue]
+    VAR PreviousSales = [Sales Previous Month]
+    RETURN
+        IF (
+            ISBLANK ( CurrentSales ) || ISBLANK ( PreviousSales ),
+            BLANK (),
+            CurrentSales - PreviousSales
+        )
+
+// Relative monthly change. DIVIDE returns BLANK for a zero or blank denominator.
+// The numerator also remains BLANK when either comparison period has no sales.
+Sales MoM % =
+    DIVIDE ( [Sales MoM Change], [Sales Previous Month] )
+
+// Net revenue for the current date selection shifted back one calendar year.
+// Returns BLANK when the prior-year period has no matching sales (e.g. all of 2025).
+Sales Previous Year =
+    CALCULATE (
+        [Total Revenue],
+        DATEADD ( DimDate[Date], -1, YEAR )
+    )
+
+// Relative yearly change; guard blanks before subtraction to avoid a false -100%.
+Sales YoY % =
+    VAR CurrentSales = [Total Revenue]
+    VAR PreviousSales = [Sales Previous Year]
+    RETURN
+        IF (
+            ISBLANK ( CurrentSales ) || ISBLANK ( PreviousSales ),
+            BLANK (),
+            DIVIDE ( CurrentSales - PreviousSales, PreviousSales )
+        )
+
+// Net revenue from January 1 through the latest selected date in its calendar year.
+// Can carry accumulated sales into later dates with no sales; it does not sum years.
+Sales YTD =
+    CALCULATE (
+        [Total Revenue],
+        DATESYTD ( DimDate[Date] )
+    )

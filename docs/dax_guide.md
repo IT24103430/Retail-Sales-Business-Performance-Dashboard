@@ -1,4 +1,4 @@
-# Core DAX Measures
+# DAX Measures
 
 The nine definitions in [core_measures.dax](../powerbi/measures/core_measures.dax)
 are the canonical core measures. They use FactSales and its existing Power Query
@@ -89,3 +89,56 @@ expect **Total Orders = 2,453**, **Total Revenue = LKR 12,348,732.29**, and
 **Total Profit = LKR 3,460,061.52**, matching the [raw data profile](data_profile.md).
 These are source-based expectations, not Desktop-verified results. Creating the
 measures, applying formats, and checking results in Desktop remain pending.
+
+## Time-intelligence measures
+
+After adding the core measures, create the six definitions in
+[time_measures.dax](../powerbi/measures/time_measures.dax) one at a time using the
+same **New measure** method, in file order. All six use `[Total Revenue]`, so
+"Sales" means revenue **after discounts**, consistent with the core measures.
+Reuse the LKR format above for money and `0.00%` for percentages.
+
+| Measure | Simple explanation | Display format |
+| --- | --- | --- |
+| Sales Previous Month | Shows net revenue for the selected dates shifted back one calendar month. | LKR, 2 decimals |
+| Sales MoM Change | Shows current net revenue minus the previous month's net revenue when both are available. | LKR, 2 decimals |
+| Sales MoM % | Shows the monthly revenue change divided by the previous month's net revenue. | Percentage, 2 decimals |
+| Sales Previous Year | Shows net revenue for the selected dates shifted back one calendar year. | LKR, 2 decimals |
+| Sales YoY % | Shows the change from the prior-year period divided by that period's net revenue. | Percentage, 2 decimals |
+| Sales YTD | Accumulates net revenue from January 1 through the latest selected date in its year. | LKR, 2 decimals |
+
+Assumptions and blank handling:
+
+- Mark the contiguous **DimDate** as the Date table and use its active, single
+  `1:*` relationship from `DimDate[Date]` to `FactSales[OrderDate]`, as documented
+  in [the model guide](data_model.md). Use DimDate fields for slicers and axes;
+  product, customer, region, and channel filters continue to apply.
+- Use **DimDate[YearMonth]** rows or one complete month selection for MoM, and the
+  same contiguous period in each year for YoY. DATEADD shifts the actual selected
+  dates; it does not find the last nonblank month. A partial-month selection is
+  shifted as selected dates, subject to DATEADD's calendar/month-end rules.
+  Noncontiguous selections, such as January and March without February, can
+  cause DATEADD errors even though the full DimDate table is contiguous.
+- Previous-period measures return blank if there are no matching sales. MoM
+  Change, MoM %, and YoY % also return blank if current sales are blank; missing
+  sales are not converted to zero or a false negative growth rate. January 2025
+  has no previous month in this dataset, and 2025 has no prior-year sales.
+- A genuine previous-period revenue of zero allows an LKR change, but DIVIDE
+  leaves the growth percentage blank because division by zero is undefined.
+- YTD uses a calendar year ending December 31 and the latest selected date,
+  rather than today's date or the latest sales date. It can carry accumulated
+  sales into October–December 2026 despite no sales in those months. In a total
+  covering several years, it returns YTD for the latest selected year, not a
+  sum of yearly YTD values.
+- Sales end **2026-09-30**, while DimDate ends **2026-12-31**. For a fair 2026
+  year-to-date comparison, select January–September 2026 so the previous-year
+  measure covers January–September 2025. Selecting the whole of 2026 instead
+  compares its available nine months with all of 2025; these measures do not
+  automatically align incomplete periods. Grand totals recalculate the selected
+  date range; they do not add or average the displayed monthly growth rates.
+
+These formulas use classic date-column
+[DATEADD](https://learn.microsoft.com/en-us/dax/dateadd-function-dax),
+[DATESYTD](https://learn.microsoft.com/en-us/dax/datesytd-function-dax), and
+[DIVIDE](https://learn.microsoft.com/en-us/dax/divide-function-dax).
+Creating and checking the time measures in Desktop remains pending.

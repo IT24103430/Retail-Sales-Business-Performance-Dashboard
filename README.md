@@ -4,7 +4,7 @@ A **Business Intelligence portfolio project** focused on transforming retail tra
 
 This project is designed to demonstrate practical skills in **data preparation, data modeling, DAX, data visualization, and business analysis** for a Business Intelligence internship.
 
-> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, and core DAX measures created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
+> **Project status:** Folder structure, project plan, synthetic CSV data, data dictionary, basic data profile, Power Query scripts, core DAX measures, and time-intelligence measures created. Desktop query execution and dashboard development are pending. No Power BI report has been created or verified.
 
 The project uses synthetic Sri Lankan retail data. All monetary values use Sri Lankan rupees (LKR). See [the project plan](docs/project_plan.md) for scope and naming conventions.
 
@@ -103,7 +103,9 @@ Link each dimension to `FactSales` with an appropriate **one-to-many relationshi
 | Units Sold | Sum of `Quantity` |
 | Average Order Value | Total Revenue ÷ Total Orders |
 | Total Discount | Sum of `DiscountAmount` |
-| Monthly Revenue Growth | Percentage change from the previous month |
+| Sales MoM % | Percentage revenue change from the previous month |
+| Sales YoY % | Percentage revenue change from the same prior-year period |
+| Sales YTD | Revenue from January 1 through the latest selected date |
 
 ### DAX Measures
 
@@ -112,7 +114,9 @@ Follow [the DAX guide](docs/dax_guide.md) to add them one at a time and apply LK
 percentage, and whole-number formats. They use the prepared FactSales columns and
 count distinct orders across multi-item baskets. Desktop execution is pending.
 
-Monthly Revenue Growth % remains planned for a later time-intelligence step.
+The six time-intelligence measures are in [time_measures.dax](powerbi/measures/time_measures.dax),
+including Sales MoM %, Sales YoY %, and Sales YTD. Their comparison-period and blank
+assumptions are documented in [the DAX guide](docs/dax_guide.md#time-intelligence-measures).
 Use [the data model guide](docs/data_model.md) to create and configure DimDate first.
 
 ## Dashboard Pages
@@ -174,7 +178,8 @@ Retail-Sales-Business-Performance-Dashboard/
 ├── powerbi/
 │   ├── queries/
 │   ├── measures/
-│   │   └── core_measures.dax
+│   │   ├── core_measures.dax
+│   │   └── time_measures.dax
 │   └── theme/
 └── docs/
     ├── project_plan.md
@@ -206,7 +211,7 @@ Generate the five raw CSV files (this script uses only the Python standard libra
 python3 scripts/generate_data.py
 ```
 
-The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; Core DAX definitions are in `powerbi/measures/core_measures.dax`; a theme remains for a later step. See [the project plan](docs/project_plan.md) for their intended locations.
+The fixed seed reproduces the dataset. Rerunning replaces the five raw CSV files. Power Query scripts are in `powerbi/queries/`; core and time-intelligence DAX definitions are in `powerbi/measures/`; a theme remains for a later step. See [the project plan](docs/project_plan.md) for their intended locations.
 
 Inspect the current CSV files with `python3 scripts/profile_data.py`. Read the
 [data dictionary](docs/data_dictionary.md) for column definitions and the
