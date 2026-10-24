@@ -1,5 +1,10 @@
 # Page 02 — Product Performance
 
+Shared slicer synchronization, navigation, tooltip defaults, and Reset filters
+follow [report_interactions.md](report_interactions.md). Reserve header space
+for the native page navigator and reset button.
+
+
 **Purpose:** Help a product manager identify revenue leaders, compare category
 profitability, and review products with weaker margins. **Report page name:**
 `Product Performance`. This is a specification; Desktop implementation and
@@ -23,7 +28,8 @@ scrolling instead of shrinking text. Keep chart titles at 14 pt, labels at
 | Retail Sales Analytics | Product Performance                                |
 | Synthetic data | LKR | Sales coverage: 01 Jan 2025 - 30 Sep 2026               |
 +----------------------------------------------------------------------------+
-| S1 Category                         | S2 Product (search enabled)            |
+| S1 Date              | S2 Category       | S3 Region        | S4 Channel    |
+| S5 Product (search enabled; local to this page)                              |
 +------------------------+--------------------------+------------------------+
 | K1 Units Sold          | K2 Total Revenue         | K3 Profit Margin %     |
 +-------------------------------------+--------------------------------------+
@@ -40,9 +46,11 @@ scrolling instead of shrinking text. Keep chart titles at 14 pt, labels at
 - Apply a **page-level** `DimDate[Date]` filter from **2025-01-01 through
   2026-09-30**, inclusive. This is the full available sales period; 2026 is partial.
   The fixed coverage subtitle describes available data, not today's date.
-- Default both slicers to All, with no chart/table selection. Keep these slicers
-  local to this page; do not automatically inherit Page 01 selections.
-- All analytical visuals receive the page filter and both slicers. Keep Top N
+- Synchronize and show Date, Category, Region, and Channel on all three pages.
+  Their authored defaults are the full sales period and All categories/regions/
+  channels; navigation retains their selections. Product is local to this page,
+  defaults to All, and does not filter the other pages. Start with no chart selection.
+- All analytical visuals receive the page filter and all five slicers. Keep Top N
   and low-margin filters **local to their own visuals**, never at page level.
 - Revenue is `[Total Revenue]` after discounts. Profit is `[Total Profit]`.
   Margin is `[Profit Margin %]`, recalculated as profit divided by revenue,
@@ -52,11 +60,15 @@ scrolling instead of shrinking text. Keep chart titles at 14 pt, labels at
 
 | ID / title | Type and exact field | Settings and sorting | Business question |
 | --- | --- | --- | --- |
-| S1 — Category | Dropdown: `DimProducts[Category]` | All by default; multi-select and Select all enabled; exclude blanks; alphabetical | Which categories should be compared? |
-| S2 — Product | Searchable dropdown: `DimProducts[ProductName]` | All by default; multi-select and Select all enabled; exclude blanks; alphabetical | Which products need a closer look? |
+| S1 — Date | Between: `DimDate[Date]`, not the automatic hierarchy | Synced and visible on all pages; full available period by default | Which trading period should be analyzed? |
+| S2 — Category | Dropdown: `DimProducts[Category]` | Synced on all pages; All by default; multi-select and Select all; alphabetical; exclude blanks | Which categories should be compared? |
+| S3 — Region | Dropdown: `DimRegions[RegionName]` | Synced on all pages; All by default; multi-select and Select all; alphabetical; exclude blanks | Which customer regions should be included? |
+| S4 — Channel | Dropdown: `DimChannels[ChannelName]` | Synced on all pages; All by default; multi-select and Select all; alphabetical; exclude blanks | Which sales channels should be included? |
+| S5 — Product | Searchable dropdown: `DimProducts[ProductName]` | Local only; All by default; multi-select and Select all; alphabetical; exclude blanks | Which products need a closer look? |
 
-Both slicers filter every KPI, chart, and table. Set Category → Product to
-**Filter**, so the product list follows the selected category; set Product →
+All five slicers filter every KPI, chart, and table. Shared slicers do not narrow
+each other; the local Product slicer has no outgoing effect on shared slicers.
+Set Category → Product to **Filter**, so the product list follows the selected category; set Product →
 Category to **None**. These fields are in the same dimension and need no new
 relationship. If an existing product selection conflicts with a new category,
 clear Product and select again; an empty intersection correctly gives no sales.
@@ -84,7 +96,7 @@ cards and tables, and the LKR format `"LKR" #,##0.00;-"LKR" #,##0.00` from the
 - **Type / fields:** Clustered horizontal bar chart. Y-axis:
   `DimProducts[ProductName]`; X-axis: `[Total Revenue]`; no legend.
   Tooltips: `DimProducts[ProductID]`, `DimProducts[Category]`, `[Units Sold]`,
-  `[Total Profit]`, and `[Profit Margin %]`.
+  `[Total Revenue]`, `[Total Profit]`, `[Total Orders]`, and `[Profit Margin %]`.
 - **Filters:** In Filters on this visual, set ProductName to **Top N → Top 10**,
   put `[Total Revenue]` in **By value**, and select **Apply filter**. Also require
   `[Total Revenue] > 0`. Product names are distinct in the current catalogue;
@@ -103,7 +115,8 @@ cards and tables, and the LKR format `"LKR" #,##0.00;-"LKR" #,##0.00` from the
 
 - **Type / fields:** Clustered horizontal bar chart. Y-axis:
   `DimProducts[Category]`; X-axis values: `[Total Revenue]` and `[Total Profit]`.
-  Legend: the two measure series. Tooltips: `[Units Sold]` and `[Profit Margin %]`.
+  Legend: the two measure series. Tooltips: `[Total Revenue]`, `[Total Profit]`,
+  `[Total Orders]`, `[Units Sold]`, and `[Profit Margin %]`.
 - **Filters / sorting:** Shared context; Category is not blank and
   `[Total Revenue]` is not blank. Include all matching categories, sorted by
   `[Total Revenue]` descending. Do not apply C1's Top 10 filter here.
@@ -139,7 +152,8 @@ cards and tables, and the LKR format `"LKR" #,##0.00;-"LKR" #,##0.00` from the
 
 - **Type / fields:** Line chart. X-axis: `DimDate[YearMonth]`; Y-axis:
   `[Total Revenue]`; legend: `DimProducts[Category]`. Tooltips:
-  `[Total Profit]`, `[Profit Margin %]`, and `[Units Sold]` for that month/category.
+  `[Total Revenue]`, `[Total Profit]`, `[Total Orders]`, `[Profit Margin %]`, and
+  `[Units Sold]` for that month/category.
 - **Filters / sorting:** Shared context; exclude blank Category. Use a categorical
   month axis, sorted YearMonth ascending using YearMonthSort. Keep available
   months within the page date range and preserve missing sales as gaps, not zero.
@@ -178,7 +192,7 @@ products in the below-25% band; that does not indicate an error. See Microsoft's
 Using **Format → Edit interactions**, let each slicer filter all analytical
 visuals. Category also filters Product as described above. For chart/table
 selections, use **Filter**, not Highlight, on the three cards and the other
-charts/table; set interactions to **None** on both slicers. Clicking a category,
+charts/table; set interactions to **None** on all five slicers. Clicking a category,
 product bar, month/category point, or table row then focuses the selected sales
 without changing slicer controls. Clearing that selection restores their context.
 
@@ -186,8 +200,8 @@ Product selections in C1 or T1 identify the selected products; T1's margin rule
 and C1's Top N rule are local display filters, not new page-wide product cohorts.
 To analyze a group consistently, select its products/categories with the slicers.
 Use the [visual interaction guide](https://learn.microsoft.com/en-us/power-bi/create-reports/service-reports-visual-interactions)
-when configuring these settings. No drill-through, new measures, or bookmarks
-are required for this page.
+when configuring these settings. No drill-through or new measures are required.
+Use the reset bookmark and page navigator defined in the report-wide guide.
 
 Build the page manually after the existing model, measures, and theme are loaded.
 As a quick review, confirm that Top 10 affects only C1, the margin threshold

@@ -1,5 +1,10 @@
 # Page 03 — Regional & Channel
 
+Shared slicer synchronization, navigation, tooltip defaults, and Reset filters
+follow [report_interactions.md](report_interactions.md). Reserve header space
+for the native page navigator and reset button.
+
+
 **Report page name:** `Regional & Channel`. **Purpose:** Help sales managers
 compare customer regions, channel revenue, monthly regional trends, and the
 product-category mix within each region.
@@ -71,7 +76,8 @@ Set a page-level `DimDate[Date]` filter from **2025-01-01 through 2026-09-30**,
 inclusive. All visuals receive this filter; clearing a slicer must not expose
 the unused October–December 2026 dates in DimDate. Default to the whole sales
 period, all categories, all regions, and all channels, with no chart selection.
-Keep slicers local to this page rather than syncing other pages automatically.
+Synchronize and show these four slicers on all three pages as defined in the
+shared interaction guide; the Product slicer remains local to Product Performance.
 
 | ID / title | Standard slicer and exact field | Behavior / ordering | Business value |
 | --- | --- | --- | --- |

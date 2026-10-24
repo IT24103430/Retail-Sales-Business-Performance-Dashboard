@@ -1,5 +1,10 @@
 # Page 01 — Executive Overview
 
+Shared slicer synchronization, navigation, tooltip defaults, and Reset filters
+follow [report_interactions.md](report_interactions.md). Reserve header space
+for the native page navigator and reset button.
+
+
 **Purpose:** Help a retail manager understand revenue, profit, order value, and
 the main sources of sales for the selected period. **Report page name:**
 `Executive Overview`. This is a build specification, not a completed dashboard
@@ -74,7 +79,8 @@ Sort dropdown labels alphabetically and keep the clear-selection icon available.
 Each slicer filters all five cards and all four charts. Set its interaction with
 the other slicers to **None**, so their available lists/ranges stay stable rather
 than cascading. Their selections still combine when filtering analytical visuals.
-Keep slicers local to this page until later page specifications define syncing.
+Synchronize and show these four slicers on all three pages using the shared
+interaction guide; Product is local to Product Performance.
 
 ## KPI cards
 
@@ -143,7 +149,8 @@ same selected sales rows. Use **None** for slicer targets and decorative text.
 One click focuses a month/category/channel/region; clearing that chart selection
 restores the slicer-defined context. Slicer selections remain visibly unchanged
 when a chart point is selected. Use slicers to combine several filters reliably.
-No drill-through or cross-page interaction is required for this page.
+No drill-through is required. Shared slicers, page navigation, and the reset
+bookmark follow the report-wide interaction guide.
 Microsoft documents [visual interaction settings](https://learn.microsoft.com/en-us/power-bi/create-reports/service-reports-visual-interactions)
 and [slicer behavior](https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-slicers).
 

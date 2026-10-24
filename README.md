@@ -143,7 +143,7 @@ Explore which products drive sales:
 - Revenue vs profit by category
 - Low-margin products review table
 - Monthly revenue by category
-- Product and category slicers
+- Shared date, category, region, and channel slicers, plus a local product slicer
 
 See [the Product Performance specification](docs/page_02_product_performance.md) for field assignments, sorting, visual filters, conditional formatting, and business questions. It reuses existing measures; Desktop implementation is pending.
 
@@ -159,6 +159,14 @@ Compare geographic and channel performance:
 - Date, category, region, and channel slicers
 
 See [the Regional & Channel specification](docs/page_03_regional_channel.md) for exact fields, sorting, filters, interactions, and business questions. It uses built-in Desktop visuals and existing measures; implementation is pending.
+
+## Report Interactions
+
+Follow [the shared interaction guide](docs/report_interactions.md) to sync the
+visible Date, Category, Region, and Channel slicers across all three pages. Product
+stays local to Product Performance. The guide covers native page navigation,
+revenue/profit/orders tooltips, chart filtering, and per-page reset bookmarks.
+All interaction setup and verification in Desktop remain pending.
 
 ## Report Design
 
@@ -210,6 +218,7 @@ Retail-Sales-Business-Performance-Dashboard/
     ├── page_01_executive_overview.md
     ├── page_02_product_performance.md
     ├── page_03_regional_channel.md
+    ├── report_interactions.md
     ├── power_query_setup.md
     └── screenshots/
 ```
