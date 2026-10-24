@@ -1,0 +1,45 @@
+# Retail Sales Analytics — Project Plan
+
+## Business objective
+
+Use synthetic Sri Lankan retail sales data to explain sales trends, product profitability, and regional performance. Help a retail team decide which products and regions need attention. All monetary values use Sri Lankan rupees (LKR); no real customer information is used.
+
+## Target users
+
+- Business owners and managers reviewing overall performance.
+- Sales and regional managers comparing regions and trends.
+- Product managers reviewing category sales and profit.
+- Beginner BI learners and portfolio reviewers following the workflow.
+
+## Deliverables
+
+- Python scripts in `scripts/` for reproducible synthetic data generation and preparation.
+- Raw CSV data in `data/raw/` and cleaned CSV data in `data/processed/`.
+- Power Query M files in `powerbi/queries/`, DAX definitions in `powerbi/measures/`, and a JSON theme in `powerbi/theme/`.
+- A Power BI report in `powerbi/`, created and checked in Desktop in a later step.
+- Setup guidance in `README.md`, business findings in `docs/`, and actual report screenshots in `docs/screenshots/`.
+
+## Dashboard pages
+
+| Page | Main questions and visuals |
+| --- | --- |
+| Executive Overview | Revenue, profit, order count, average order value, monthly revenue trend, and category contribution. |
+| Product Performance | Top products, units sold, category revenue, and product profitability. |
+| Regional Sales Analysis | Regional revenue, profit, revenue share, and monthly regional trends. |
+
+Use date, region, and category filters where relevant. Planned KPIs are Total Revenue, Total Cost, Total Profit, Profit Margin %, Total Orders, Average Order Value, and Monthly Revenue Growth %.
+
+## Consistent file naming
+
+- Use lowercase `snake_case` for scripts, CSV files, documentation, query files, measure files, themes, and screenshots.
+- Planned data paths: `data/raw/retail_sales.csv` and `data/processed/retail_sales_clean.csv`. Keep one canonical file at each stage.
+- Use descriptive script names such as `scripts/generate_data.py`; avoid names such as `final_v2.py`.
+- Use one shared measure file, `powerbi/measures/sales_measures.dax`, and one theme, `powerbi/theme/retail_sales_theme.json`.
+- Name the report `RetailSalesAnalytics.pbix` or `RetailSalesAnalytics.pbip` when it is actually created. Document the chosen format and keep one report source.
+- Name screenshots `executive_overview.png`, `product_performance.png`, and `regional_sales_analysis.png`.
+- Preserve the planned CSV columns: `OrderID`, `OrderDate`, `CustomerID`, `ProductID`, `ProductName`, `Category`, `Region`, `Quantity`, `UnitPrice`, and `UnitCost`.
+- Use `FactSales`, `DimDate`, `DimProduct`, `DimCustomer`, and `DimRegion` for model tables. Keep measure names consistent with the README.
+
+## Current status
+
+Folder setup is complete. Data, scripts, queries, measures, theme, report, and screenshots remain to be built in later tasks. Power BI Desktop work is pending; no PBIX or PBIP has been created or verified.

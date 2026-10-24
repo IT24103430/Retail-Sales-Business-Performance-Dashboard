@@ -1,0 +1,20 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Local settings and operating system files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+~$*
+
+# Power BI local caches and user settings
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+*.pbix.tmp
